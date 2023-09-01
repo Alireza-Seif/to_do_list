@@ -6,9 +6,14 @@ import '../widgets/app_bar.dart';
 import '../widgets/search_box.dart';
 import '../widgets/todo_item.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final todosList = ToDo.todoList();
 
   @override
@@ -39,6 +44,8 @@ class HomePage extends StatelessWidget {
                       for (ToDo todoo in todosList)
                         ToDoItem(
                           todo: todoo,
+                          onToDoChanged: _handleToDoChange,
+                          onDeleteItem: () {},
                         ),
                     ],
                   ),
@@ -101,5 +108,11 @@ class HomePage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _handleToDoChange(ToDo todo) {
+    setState(() {
+      todo.isDone = !todo.isDone;
+    });
   }
 }
