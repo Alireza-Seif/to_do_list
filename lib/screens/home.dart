@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../constants/colors.dart';
 import '../model/todo.dart';
 import '../widgets/app_bar.dart';
-import '../widgets/search_box.dart';
 import '../widgets/todo_item.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,6 +15,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final todosList = ToDo.todoList();
   final _todoController = TextEditingController();
+  List<ToDo> _foundToDo = [];
+
+  @override
+  void initState() {
+    _foundToDo = todosList;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                      for (ToDo todoo in todosList)
+                      for (ToDo todoo in _foundToDo.reversed)
                         ToDoItem(
                           todo: todoo,
                           onToDoChanged: _handleToDoChange,
@@ -134,5 +140,48 @@ class _HomePageState extends State<HomePage> {
       ));
     });
     _todoController.clear();
+  }
+
+  void _runFilter(String enterdKeyword) {
+    List<ToDo> results = [];
+    if (enterdKeyword.isEmpty) {
+      results = todosList;
+    } else {
+      results = todosList
+          .where((item) => item.todoText!
+              .toLowerCase()
+              .contains(enterdKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundToDo = results;
+    });
+  }
+
+  Widget searchBox() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: TextField(
+        onChanged: (value) => _runFilter(value),
+        decoration: const InputDecoration(
+            contentPadding: EdgeInsets.all(0),
+            prefixIcon: Icon(
+              Icons.search,
+              color: tdBlack,
+              size: 20,
+            ),
+            prefixIconConstraints: BoxConstraints(
+              maxHeight: 20,
+              maxWidth: 25,
+            ),
+            border: InputBorder.none,
+            hintText: 'Search',
+            hintStyle: TextStyle(color: tdGrey)),
+      ),
+    );
   }
 }
