@@ -49,7 +49,7 @@ class ToDoItem extends StatelessWidget {
             iconSize: 18,
             icon: const Icon(Icons.delete),
             onPressed: () {
-              print('Clicked on delete icon');
+              onDeleteItem(todo.id);
             },
           ),
         ),

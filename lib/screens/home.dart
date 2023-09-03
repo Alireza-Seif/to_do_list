@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                         ToDoItem(
                           todo: todoo,
                           onToDoChanged: _handleToDoChange,
-                          onDeleteItem: () {},
+                          onDeleteItem: _deleteToDoItem,
                         ),
                     ],
                   ),
@@ -113,6 +113,12 @@ class _HomePageState extends State<HomePage> {
   void _handleToDoChange(ToDo todo) {
     setState(() {
       todo.isDone = !todo.isDone;
+    });
+  }
+
+  void _deleteToDoItem(String id) {
+    setState(() {
+      todosList.removeWhere((item) => item.id == id);
     });
   }
 }
