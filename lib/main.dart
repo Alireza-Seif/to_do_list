@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:to_do_list/screens/home.dart';
+import 'package:seif_list/screens/home.dart';
 
 void main() {
   runApp(const MyApp());

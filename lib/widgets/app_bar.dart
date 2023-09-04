@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list/constants/colors.dart';
+import 'package:seif_list/constants/colors.dart';
 
 AppBar buildAppBar() {
   return AppBar(
